@@ -1,0 +1,20 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+$setting=array (
+  'site_name' => '数据管理后台',
+  'site_domain' => 'http://domain.com/',
+  'site_logo' => 'images/logo.png',
+  'site_icp' => '暂时不备案',
+  'site_terms' => '欢迎使用该cms后台系统。',
+  'site_stats' => '暂无统计代码',
+  'site_footer' => '',
+  'site_status' => '1',
+  'site_close_reason' => '网站维护升级中......',
+  'site_keyword' => '后台, Codeigniter, cms',
+  'site_description' => '数据管理后台系统',
+  'site_theme' => 'default',
+  'attachment_url' => 'http://domain.com/attachments/',
+  'attachment_dir' => 'attachments',
+  'attachment_type' => '*.jpg;*.gif;*.png;*.doc',
+  'attachment_maxupload' => '4096',
+  'thumbs_preferences' => '[]',
+);
