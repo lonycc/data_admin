@@ -1,24 +1,17 @@
 <?php
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class Captcha
-{
+if (!defined('BASEPATH')) exit('No direct script access allowed');
+class Captcha {
     private $width = 100;
     private $height = 42;
     private $codeNum = 4;
     private $code;
     private $im;
-
-    public function __construct( array $config = [] )
-    {
-        if ( count($config) > 0 )
-        {
+    public function __construct(array $config = []) {
+        if (count($config) > 0) {
             $this->initialize($config);
         }
     }
-
-    public function showImg()
-    {
+    public function showImg() {
         //创建图片
         $this->createImg();
         //设置干扰元素
@@ -28,25 +21,20 @@ class Captcha
         //输出图片
         $this->outputImg();
     }
-
-    public function getCaptcha()
-    {
+    public function getCaptcha() {
         $this->createCode();
         return strtolower($this->code);
     }
-
-    private function createImg(){
+    private function createImg() {
         $this->im = imagecreatetruecolor($this->width, $this->height);
         $bgColor = imagecolorallocate($this->im, 50, 50, 50);
         imagefill($this->im, 0, 0, $bgColor);
     }
-
-    private function setDisturb()
-    {
+    private function setDisturb() {
         $area = ($this->width * $this->height) / 20;
         $disturbNum = ($area > 250) ? 250 : $area;
         //加入点干扰
-        for ($i = 0; $i < $disturbNum; $i++) {
+        for ($i = 0;$i < $disturbNum;$i++) {
             $color = imagecolorallocate($this->im, rand(0, 255), rand(0, 255), rand(0, 255));
             imagesetpixel($this->im, rand(1, $this->width - 2), rand(1, $this->height - 2), $color);
         }
@@ -56,18 +44,14 @@ class Captcha
             imagearc($this->im, rand(0, $this->width), rand(0, $this->height), rand(30, 300), rand(20, 200), 50, 30, $color);
         }*/
     }
-
-    private function createCode()
-    {
+    private function createCode() {
         $str = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKMNPQRSTUVWXYZ";
-        for ($i = 0; $i < $this->codeNum; $i++) {
-            $this->code .= $str{rand(0, strlen($str) - 1)};
+        for ($i = 0;$i < $this->codeNum;$i++) {
+            $this->code.= $str{rand(0, strlen($str) - 1) };
         }
     }
-
-    private function setCaptcha()
-    {
-        for ($i = 0; $i < $this->codeNum; $i++) {
+    private function setCaptcha() {
+        for ($i = 0;$i < $this->codeNum;$i++) {
             $color = imagecolorallocate($this->im, rand(50, 250), rand(100, 250), rand(128, 250));
             $size = rand(floor($this->height / 5), floor($this->height / 3));
             $x = floor($this->width / $this->codeNum) * $i + 5;
@@ -75,9 +59,7 @@ class Captcha
             imagechar($this->im, $size, $x, $y, $this->code{$i}, $color);
         }
     }
-
-    private function outputImg()
-    {
+    private function outputImg() {
         if (imagetypes() & IMG_JPG) {
             header('Content-type:image/jpeg');
             imagejpeg($this->im);
@@ -92,17 +74,12 @@ class Captcha
         }
         imagedestroy($this->im);
     }
-
-    private function initialize($config = [])
-    {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key))
-            {
+    private function initialize($config = []) {
+        foreach ($config as $key => $val) {
+            if (isset($this->$key)) {
                 $this->$key = $val;
             }
         }
         return $this;
     }
-
 }
