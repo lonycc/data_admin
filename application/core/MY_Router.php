@@ -17,7 +17,7 @@ class MY_Router extends CI_Router {
             return $segments;
         }
         if (is_dir(APPPATH . 'controllers/' . $segments[0])) {
-            $temp = array('dir' => '', 'number' => 0, 'path' => '');
+            $temp = array('dir' => [], 'number' => 0, 'path' => '');
             $temp['number'] = count($segments) - 1;
             for ($i = 0;$i <= $temp['number'];$i++) {
                 $temp['path'].= $segments[$i] . '/';
