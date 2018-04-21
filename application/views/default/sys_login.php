@@ -31,7 +31,7 @@
 		<!--页脚-->
 		<div class="page-footer text-center">
 			<p>建议：使用Chrome、FireFox、Safari、Opera等现代浏览器打开。</p>
-			<p>南方网 &copy; <?php echo date('Y', time()); ?></p>
+			<p>www.domain.com &copy; <?php echo date('Y', time()); ?></p>
 		</div>
 		<!--页脚-->
 		<script color="255,3,3" opacity='0.9' zIndex="-2" count="100" src="/static/js/canvas-nest.min.js"></script>
