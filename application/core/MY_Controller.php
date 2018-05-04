@@ -6,7 +6,7 @@ abstract class MY_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         date_default_timezone_set('PRC');
-        $this->load->database();
+        // $this->load->database();
         $this->settings->load('backend');
         $this->load->switch_theme(setting('backend_theme'));
         $this->_check_http_auth();
