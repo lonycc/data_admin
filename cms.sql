@@ -135,7 +135,8 @@ INSERT INTO `app_fieldtypes` (`k`, `v`) VALUES
 ('datetime',	'日期时间(VARCHAR)'),
 ('content',	'内容模型调用(INT)'),
 ('colorpicker',	'颜色选择器(VARCHAR)'),
-('thumbnail',	'缩略图(VARCHAR)');
+('thumbnail',	'缩略图(VARCHAR)'),
+('file', '文件(VARCHAR)');
 
 DROP TABLE IF EXISTS `app_log`;
 CREATE TABLE `app_log` (
