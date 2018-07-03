@@ -143,6 +143,10 @@ class Form {
         }
         return $input;
     }
+    private function _file($field, $default, $place_holder = '') {
+        $field['width'] = $field['width'] ? $field['width'] : 150;
+        return '<input class="form-control" name="' . $field['name'] . '" id="' . $field['name'] . '" type="file" style="width:' . $field['width'] . 'px" value="' . $default . '" placeholder="' . $place_holder . '" />';
+    }
     // ------------------------------------------------------------------------
     
     /**
