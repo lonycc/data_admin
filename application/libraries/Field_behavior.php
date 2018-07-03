@@ -106,6 +106,7 @@ class Field_behavior {
                 case 'datetime':
                 case 'colorpicker':
                 case 'thumbnail':
+                case 'file':
                 case 'linked_menu':
                 case 'textarea':
                     $field = array('type' => 'VARCHAR', 'constraint' => $data['length'] ? $data['length'] : 100, 'default' => '');
@@ -143,7 +144,7 @@ class Field_behavior {
             $this->_extra_fields[$field['type']]->on_form($field, $default, $has_tip);
         } else {
             //查看是否有指定默认值,以下字段类型支持
-            $default_value_enabled = array('int', 'float', 'input', 'textarea', 'colorpicker', 'datetime', 'thumbnail');
+            $default_value_enabled = array('int', 'float', 'input', 'textarea', 'colorpicker', 'datetime', 'thumbnail', 'file');
             if (in_array($field['type'], $default_value_enabled) AND $default == '' AND $field['values'] != '') {
                 $default = $field['values'];
             }
@@ -365,8 +366,31 @@ class Field_behavior {
                     } else {
                         $return = '';
                     }
+                case 'file':
+                    $config = ['upload_path' => APPPATH . '../attachments/' . date('Ymd') . '/', 'allowed_types' => 'doc|txt|text|wps|docx|jpg|png|jpeg', 'max_size' => 5120, 'detect_mime' => true, 'file_name' => date('YmdHis'), ];
+                    $this->_ci->load->library('upload', $config);
+                    if (!@file_exists($config['upload_path'])) {
+                        @mkdir($config['upload_path'], 0777, TRUE);
+                        @chmod($config['upload_path'], 0777);
+                    }
+                    if ($this->_ci->upload->do_upload($field['name']) === FALSE) {
+                        $return = '';
+                    } else {
+                        $info = $this->_ci->upload->data();
+                        $file['uid'] = 1;
+                        $file['ext'] = $info['file_ext'];
+                        $file['origin_name'] = $info['client_name'];
+                        $file['new_name'] = $info['file_name'];
+                        $file['size'] = $info['file_size'];
+                        $file['postdate'] = time();
+                        $file['uri'] = 'attachments/' . date('Ymd') . '/' . $file['new_name'];
+                        $data['attach'] = $this->_ci->config->item('base_url') . $file['uri'];
+                        $this->_ci->load('attach_model');
+                        $this->_ci->attach_model->add_attach($file);
+                        $return = $data['attach'];
+                    }
                 default:
-                break;
+                    break;
             }
             $post[$field['name']] = $return;
         }
